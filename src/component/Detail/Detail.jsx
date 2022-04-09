@@ -103,8 +103,7 @@ function Detail() {
                               <li>Jika overtime lebih dari 12 jam akan ada tambahan biaya Rp.20.000/jam</li>
                               <li>Tidak termasuk akomodasi penginapan</li>
                             </ul>
-                            <button type="button" class="btn btn-lanjut">Lanjutkan Pembayaran
-                            </button>
+                            
                           </div>
                         </div>
                       </div>
