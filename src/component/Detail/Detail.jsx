@@ -1,27 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import Car from '../../assets/img/image_car.png';
+import React from 'react';
 import User from '../../assets/icon/fi_users.png';
 import Setting from '../../assets/icon/fi_settings.png';
 import Calendar from '../../assets/icon/fi_calendar.png';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function Detail() {
-    const { id } = useParams();
-    const [dataDetail, setDataDetail] = useState([])
-
-    useEffect(() => {
-        handleDetail();
-    }, [id])
-
-    const handleDetail = async () =>{
-        try {
-        const res = await axios(`https://rent-cars-api.herokuapp.com/customer/car/${id}`);
-        setDataDetail(res.data)
-        } catch (error) {
-        console.log(error);
-        }
-    }
+  const { isLoading: loadingDetail, data: carData } = useSelector((state) => state.detailCar);
     return (
       <section className="detail-page">
         <div className="row">
@@ -108,13 +92,16 @@ function Detail() {
                         </div>
                       </div>
                     {/* Card Detail */}
-                      <div className="col-md-4">
+                    <div className="col-md-4">
+                      {loadingDetail ? (
+                        <div>Loading... </div>
+                      ) : (
                         <div class="card-detail-mobil">
                           <div class="card-body">
                             <h5 class="card-title d-flex justify-content-center">
-                                <img width={300} src={dataDetail.image} alt="img-car" />
+                                <img width={300} src={carData.image} alt="img-car" />
                             </h5>
-                            <p><strong>{dataDetail.name}</strong></p>
+                            <p><strong>{carData.name}</strong></p>
                             <div className="icon d-flex">
                               <p class="card-text">
                                   <img className='me-1' src={User} alt="icon-key" />4 Orang
@@ -126,12 +113,13 @@ function Detail() {
                                   <img className='me-1' src={Calendar} alt="icon-clock" />Tahun 2020
                               </p>
                             </div>
-                            <p>Total <span><strong>Rp.{dataDetail.price}</strong></span></p>
+                            <p>Total <span><strong>Rp.{carData.price}</strong></span></p>
                             <button type="button" class="btn btn-lanjut">Lanjutkan Pembayaran
                             </button>
                           </div>
                         </div>
-                      </div>
+                      )}
+                    </div>
                     </div>
                   </div>
                 </div>

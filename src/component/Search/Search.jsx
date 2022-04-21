@@ -1,45 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import Car from '../../assets/img/image_car.png';
 import User from '../../assets/icon/fi_users.png';
 import Setting from '../../assets/icon/fi_settings.png';
 import Calendar from '../../assets/icon/fi_calendar.png';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { isAccordionItemSelected } from 'react-bootstrap/esm/AccordionContext';
 import Header from '../Header/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCar,noCar } from '../../redux/action/carAction';
+import { saveDetailByID } from '../../redux/action/detailAction';
+import { Link } from 'react-router-dom';
 
 function Search() {
-    const [dataList, setDataList] = useState([]);
-    const navigate = useNavigate();
- 
+    // const [dataList, setDataList] = useState([]);
+  
+    const dispatch = useDispatch();
+
+    const { isLoading: loadingCar, data: carData } = useSelector(
+    (state) => state.car
+    );
+    
+    useEffect(() => {
+      ambilData()
+    }, []);
   
     const ambilData = async (e) => {
-        setDataList([]);
-    
-        e.preventDefault();
-        try {
-          const res = await axios(
-            "https://rent-cars-api.herokuapp.com/customer/car"
-          );
-          setDataList(res.data);
-        } catch (error) {
-          console.log(error);
-        } 
-      };
-    // const ambilData = async (e) => {
-    //   try {
-    //     const res = await axios(
-    //       "https://rent-cars-api.herokuapp.com/customer/car"
-    //     );
-    //     setDataList(res.data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   } 
+  
+      dispatch(noCar())
+      e.preventDefault();
+      try {
+        await dispatch(getCar());
+      } catch (error) {
+        console.log(error);
+      } 
+    };
+    // const ambilData  = () => {
+    //   navigate('/search');
     // };
   
-    const handleGoDetail = (id) => {
-      navigate(`/detail/${id}`)
-    }
+    // const handleGoDetail = (id) => {
+    //   navigate(`/detail/${id}`)
+    // }
     return (
     <>
     <Header /> 
@@ -57,7 +55,7 @@ function Search() {
                     <p><strong>Pencarianmu</strong></p>
                   </div>
                 </div>
-                <form onSubmit={ambilData}>
+                <form onSubmit={ambilData}> 
                 <div className="row row-input">
                   <div className="col-auto">
                     <span>Tipe Driver</span>
@@ -104,7 +102,9 @@ function Search() {
                 <div className="row">
                   <div className="col-md-12">
                     <div className="row">
-                        {dataList.map((item)=>{
+                      {loadingCar
+                      ? ''
+                      : carData.map((item) => {
                             return(
                                 <div className="col-md-4">
                                 <div class="card" key={item.id}>
@@ -125,8 +125,9 @@ function Search() {
                                         <img src={Calendar} alt="icon-clock" />Tahun 2020
                                     </p>
                                     <div class="btn-group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-pilih btn-success" onClick={()=>handleGoDetail(item.id)}>Pilih Mobil
-                                    </button>
+                                    <Link className="btn btn-pilih" 
+                                      to={`detail/${item.id}`} 
+                                      onClick={()=> dispatch(saveDetailByID(item))}>Pilih Mobil</Link>
                                     </div>
                                   </div>
                                 </div>
