@@ -1,5 +1,5 @@
 import React from 'react'
-import mobil from '../../assets/img/img_carmobil.png'
+import mobil from '../../assets/images/img_carmobil.png'
 
 function Header(){
     return(

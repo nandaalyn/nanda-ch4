@@ -1,32 +1,63 @@
-import React from 'react';
-import User from '../../assets/icon/fi_users.png';
-import Setting from '../../assets/icon/fi_settings.png';
-import Calendar from '../../assets/icon/fi_calendar.png';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import "./Detail.css";
+import Navbar2 from "../../component/Navbar2/Navbar2"
+import Footer from "../../component/Footer/Footer"
+import user from "../../assets/images/icon/fi_users.svg"
+import setting from "../../assets/images/icon/fi_settings.svg"
+import calendar from "../../assets/images/icon/fi_calendar.svg"
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import ModalImage from "react-modal-image";
+import ReactPlayer from "react-player";
 
-function Detail() {
-  const { isLoading: loadingDetail, data: carData } = useSelector((state) => state.detailCar);
-    return (
+const Detail = () => {
+  const [dataDetail, setDataDetail] = useState([]);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    handleDetail();
+  }, [id]);
+
+  const handleDetail = async () => {
+    try {
+      const res = await axios(
+        `https://rent-car-appx.herokuapp.com/admin/car/${id}`
+      );
+      setDataDetail(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <>
+      <Navbar2 />
       <section className="detail-page">
         <div className="row">
           <div className="col head"></div>
         </div>
         <div className="container">
           <div className="row d-flex justify-content-center">
-            <div className="col-md-12">
+            <div className="col-md-10">
               {/* Box Form */}
               <div className="box">
                 <div className="row">
                   <div className="col">
-                    <p><strong>Pencarianmu</strong></p>
+                    <p>
+                      <strong>Pencarianmu</strong>
+                    </p>
                   </div>
                 </div>
                 <div className="row row-input">
                   <div className="col-auto">
                     <span>Tipe Driver</span>
                     <div className="input-group">
-                      <select class="form-select" id="inputGroupSelect01" disabled>
-                      </select>
+                      <select
+                        class="form-select"
+                        id="inputGroupSelect01"
+                        disabled
+                      ></select>
                     </div>
                   </div>
                   <div className="col-auto">
@@ -38,8 +69,11 @@ function Detail() {
                   <div className="col-auto">
                     <span>Waktu Jemput/Ambil</span>
                     <div className="input-group">
-                      <select class="form-select" id="inputGroupSelect01" disabled>
-                      </select>
+                      <select
+                        class="form-select"
+                        id="inputGroupSelect01"
+                        disabled
+                      ></select>
                     </div>
                   </div>
                   <div className="col-auto">
@@ -59,67 +93,127 @@ function Detail() {
                       <div className="col-md-8">
                         <div className="card card-detail">
                           <div className="card-title">
-                            <p><strong>Tentang Paket</strong></p>
+                            <p>
+                              <strong>Tentang Paket</strong>
+                            </p>
+                            <div className="react-player">
+                              <ReactPlayer
+                                url="https://www.youtube.com/watch?v=LPLuCGQPd0Y"
+                                width="530px"
+                              />
+                            </div>
                           </div>
                           <div class="card-body">
                             <p>Include</p>
                             <ul>
-                              <li>Apa saja yang termasuk dalam paket misal durasi max 12 jam</li>
+                              <li>
+                                Apa saja yang termasuk dalam paket misal durasi
+                                max 12 jam
+                              </li>
                               <li>Sudah termasuk bensin selama 12 jam</li>
                               <li>Sudah termasuk Tiket Wisata</li>
                               <li>sudah termasuk pajak</li>
                             </ul>
                             <p>Exclude</p>
                             <ul>
-                              <li>Tidak termasuk biaya makan sopir Rp.75.000/hari</li>
-                              <li>Jika overtime lebih dari 12 jam akan ada tambahan biaya Rp.20.000/jam</li>
+                              <li>
+                                Tidak termasuk biaya makan sopir Rp.75.000/hari
+                              </li>
+                              <li>
+                                Jika overtime lebih dari 12 jam akan ada
+                                tambahan biaya Rp.20.000/jam
+                              </li>
                               <li>Tidak termasuk akomodasi penginapan</li>
                             </ul>
-                            <p><strong>Refund, Reschedule, Overtime</strong></p>
+                            <p>
+                              <strong>Refund, Reschedule, Overtime</strong>
+                            </p>
                             <ul>
-                              <li>Tidak termasuk biaya makan sopir Rp.75.000/hari</li>
-                              <li>Jika overtime lebih dari 12 jam akan ada tambahan biaya Rp.20.000/jam</li>
+                              <li>
+                                Tidak termasuk biaya makan sopir Rp.75.000/hari
+                              </li>
+                              <li>
+                                Jika overtime lebih dari 12 jam akan ada
+                                tambahan biaya Rp.20.000/jam
+                              </li>
                               <li>Tidak termasuk akomodasi penginapan</li>
-                              <li>Tidak termasuk biaya makan sopir Rp.75.000/hari</li>
-                              <li>Jika overtime lebih dari 12 jam akan ada tambahan biaya Rp.20.000/jam</li>
+                              <li>
+                                Tidak termasuk biaya makan sopir Rp.75.000/hari
+                              </li>
+                              <li>
+                                Jika overtime lebih dari 12 jam akan ada
+                                tambahan biaya Rp.20.000/jam
+                              </li>
                               <li>Tidak termasuk akomodasi penginapan</li>
-                              <li>Tidak termasuk biaya makan sopir Rp.75.000/hari</li>
-                              <li>Jika overtime lebih dari 12 jam akan ada tambahan biaya Rp.20.000/jam</li>
+                              <li>
+                                Tidak termasuk biaya makan sopir Rp.75.000/hari
+                              </li>
+                              <li>
+                                Jika overtime lebih dari 12 jam akan ada
+                                tambahan biaya Rp.20.000/jam
+                              </li>
                               <li>Tidak termasuk akomodasi penginapan</li>
                             </ul>
-                            
                           </div>
                         </div>
                       </div>
-                    {/* Card Detail */}
-                    <div className="col-md-4">
-                      {loadingDetail ? (
-                        <div>Loading... </div>
-                      ) : (
+                      {/* Card Detail */}
+                      <div className="col-md-4">
                         <div class="card-detail-mobil">
                           <div class="card-body">
-                            <h5 class="card-title d-flex justify-content-center">
-                                <img width={300} src={carData.image} alt="img-car" />
-                            </h5>
-                            <p><strong>{carData.name}</strong></p>
+                            <a class="card-title d-flex justify-content-center">
+                              <ModalImage
+                                small={dataDetail.image}
+                                large={dataDetail.image}
+                                alt={dataDetail.name}
+                              />
+                              ;
+                            </a>
+                            <p>
+                              <strong>{dataDetail.name}</strong>
+                            </p>
                             <div className="icon d-flex">
                               <p class="card-text">
-                                  <img className='me-1' src={User} alt="icon-key" />4 Orang
+                                <img
+                                  className="me-1"
+                                  src={user}
+                                  alt="icon-key"
+                                />
+                                4 Orang
                               </p>
                               <p class="card-text">
-                                  <img className='me-1' src={Setting} alt="icon-clock" />Manual
+                                <img
+                                  className="me-1"
+                                  src={setting}
+                                  alt="icon-clock"
+                                />
+                                Manual
                               </p>
                               <p class="card-text">
-                                  <img className='me-1' src={Calendar} alt="icon-clock" />Tahun 2020
+                                <img
+                                  className="me-1"
+                                  src={calendar}
+                                  alt="icon-clock"
+                                />
+                                Tahun 2020
                               </p>
                             </div>
-                            <p>Total <span><strong>Rp.{carData.price}</strong></span></p>
-                            <button type="button" class="btn btn-lanjut">Lanjutkan Pembayaran
+                            <p>
+                              Total{" "}
+                              <span>
+                                <strong>Rp.{dataDetail.price}</strong>
+                              </span>
+                            </p>
+                            <button
+                              type="button"
+                              class="btn btn-lanjut"
+                              onClick={() => navigate("/invoice")}
+                            >
+                              Lanjutkan Pembayaran
                             </button>
                           </div>
                         </div>
-                      )}
-                    </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -128,6 +222,9 @@ function Detail() {
           </div>
         </div>
       </section>
-    )
-  }
-export default Detail
+      <Footer />
+    </>
+  );
+};
+
+export default Detail;

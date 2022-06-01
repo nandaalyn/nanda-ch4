@@ -1,10 +1,10 @@
 import React from 'react'
-import fb from '../../assets/icon/icon_facebook.png'
-import ig from '../../assets/icon/icon_instagram.png'
-import twt from '../../assets/icon/icon_twitter.png'
-import mail from '../../assets/icon/icon_mail.png'
-import twitch from '../../assets/icon/icon_twitch.png'
-import logo from '../../assets/img/logo.png'
+import fb from '../../assets/images/icon/icon_facebook.png'
+import ig from '../../assets/images/icon/icon_instagram.png'
+import twt from '../../assets/images/icon/icon_twitter.png'
+import mail from '../../assets/images/icon/icon_mail.png'
+import twitch from '../../assets/images/icon/icon_twitch.png'
+import logo from '../../assets/images/logo.png'
 
 function Footer(){
     return(
